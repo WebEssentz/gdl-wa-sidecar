@@ -193,6 +193,7 @@ app.get('/qr', (_, res) => {
 
 // Secret guard for all routes below
 app.use((req, res, next) => {
+  if (req.method === 'OPTIONS') return next()
   if (req.headers['x-sidecar-secret'] !== process.env.WA_SIDECAR_SECRET) {
     return res.status(401).json({ error: 'Unauthorized' })
   }
